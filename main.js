@@ -1,14 +1,16 @@
 // Modules to control application life and create native browser window
 const {app, BrowserWindow ,Menu} = require('electron')
 const path = require('path')
+const IpcManager = require('./src/script/ipcManager/utils/Main')
+const ipcManager = new IpcManager();
 
 function createWindow () {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 350,
+    width: 850,
     height: 520,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js')
+      preload: path.join(__dirname, './src/script/preloadMain.js')
     }
   })
   Menu.setApplicationMenu(null)
@@ -24,6 +26,8 @@ function createWindow () {
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
   createWindow()
+  //init ipcManager
+  ipcManager.init();
 
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the
@@ -38,6 +42,3 @@ app.whenReady().then(() => {
 app.on('window-all-closed', function () {
   if (process.platform !== 'darwin') app.quit()
 })
-
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.

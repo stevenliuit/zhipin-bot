@@ -12,9 +12,11 @@ const num = ref(10);
 
 onMounted(()=>{
     setInterval(()=>{
-        console.log(num)
+        if(num.value==100){
+            num.value = 0;
+        }
         num.value+=10;
-    },1000)
+    },300)
 })
 
 </script>
