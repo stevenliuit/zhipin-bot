@@ -1,7 +1,7 @@
 /*
  * @Author: BlueStar
  * @Date: 2022-06-06 17:49:49
- * @LastEditTime: 2022-06-06 18:06:30
+ * @LastEditTime: 2022-06-07 10:17:51
  * @Description: 预加载脚本初始化ipc管道
  */
 const { contextBridge, ipcRenderer } = require('electron')
@@ -13,10 +13,10 @@ module.exports = class PreloadIpcManager {
     }
 
     init = () => {
-        for (let item of ipcConfig) {
-            contextBridge.exposeInMainWorld('electronAPI', {
-                [item.name]: (params) => ipcRenderer.invoke(item.name, params)
-            })
+        let ipcRender =  {}
+        for(let item of ipcConfig){
+            ipcRender[item.name]  = (params) => ipcRenderer.invoke(item.name, params)
         }
+        contextBridge.exposeInMainWorld('electronAPI' , ipcRender)
     }
 }

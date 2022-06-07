@@ -1,7 +1,7 @@
 /*
  * @Author: BlueStar
  * @Date: 2022-06-06 15:12:00
- * @LastEditTime: 2022-06-06 17:00:25
+ * @LastEditTime: 2022-06-07 15:21:26
  * @Description: 获取数据的方法
  */
 const axios = require("axios");
@@ -18,14 +18,11 @@ class GetData {
     
     //获取数据的方法
     async getData(){
-        console.log('正在获取数据中')
-        let res = await axios.postMan(()=>{
-            
-        })
+        console.log('正在抽取数据中')
     }
 
     start = ()=>{
-        console.log('抽取任务启动');
+        console.log('启动了抽取任务');
     }
 
 }
