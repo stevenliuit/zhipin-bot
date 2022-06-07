@@ -7,21 +7,19 @@
 const { ipcMain } = require('electron')
 const ipcConfig = require('../ipcConfig')
 
-class IpcManager{
-    
-    
-    constructor(){
-    }
+class IpcManager {
 
-    handlerFunc = (event, params)=>{
-        console.log('接收到ipc管道通讯' , event , params)
-    }
+
+    constructor() {}
+
 
     //初始化
-    init = ()=>{
+    init = () => {
         console.log("ipcManager初始化中")
-        for(let item of ipcConfig){
-            ipcMain.on(item.name , this.handlerFunc)
+        for (let item of ipcConfig) {
+            ipcMain.handle(item.name, (event, params) => {
+                return item.event(event, params)
+            })
         }
     }
 }

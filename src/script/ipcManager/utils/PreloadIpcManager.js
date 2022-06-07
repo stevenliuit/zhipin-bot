@@ -7,15 +7,15 @@
 const { contextBridge, ipcRenderer } = require('electron')
 const ipcConfig = require('../ipcConfig')
 
-module.exports = class PreloadIpcManager{
-    constructor(){
+module.exports = class PreloadIpcManager {
+    constructor() {
 
     }
 
-    init = ()=>{
-        for(let item of ipcConfig){
+    init = () => {
+        for (let item of ipcConfig) {
             contextBridge.exposeInMainWorld('electronAPI', {
-                [item.name] : (params) => ipcRenderer.send( item.name , params)
+                [item.name]: (params) => ipcRenderer.invoke(item.name, params)
             })
         }
     }
