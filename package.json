@@ -4,7 +4,8 @@
   "description": "A minimal Electron application",
   "main": "main.js", 
   "scripts": {
-    "start": "concurrently \"(cd src/view) &&  (npm run dev)\" \"electron  --inspect=5858  . \""
+    "start": "concurrently \"(cd src/view) &&  (npm run dev)\" \"electron  --inspect=5858  . \"",
+    "server": "(cd src/view) &&  (npm run dev)"
   },
   "repository": "https://github.com/electron/electron-quick-start",
   "keywords": [

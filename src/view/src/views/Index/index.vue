@@ -1,28 +1,36 @@
 <template>
-  <div>
-      <el-progress type="circle" :percentage="num" status="success" />
-      <el-button @click="sendIpc" type="primary">发送ipc命令</el-button>
-  </div>
+  <div>这模板</div>
+  <div @click="ccc($event)" v-if="show"  v-for="item in 3" :[name]="name">这模板2</div>
+  <div v-else :[name]="name">这模板else</div>
+    <h1 v-if="name=='lks'">Vue is awesome!</h1>
+    <h1 v-else-if="name=='one'">hsy</h1>
+    <h1 v-else>Oh no 😢</h1>
+    <input type="checkbox" value="Jack"  v-model="checks"/>
+    
+    <input type="checkbox" value="Jack2"  v-model="checks"/>
+    
+    <input type="checkbox" value="Jack3"  v-model="checks"/>
+
+    <label for="checkbox">{{ checks }}</label>
 </template>
 
-
-<script setup lang="ts">
-import { ref , onMounted } from 'vue'
-
-const num = ref(10);
-
-const sendIpc = async ()=>{
-    num.value = await electronAPI.test(Number(num.value)+1);
-}
-
-onMounted(()=>{
-    setInterval(()=>{
-        num.value+=10;
-        if(num.value>=100){
-            num.value = 0;
+<script>
+export default {
+    data(){
+        return {
+            name: 'lks',
+            show: true,
+            checks: [],
         }
-    },2300)
-})
-
+    },
+    methods: {
+        ccc(a,b){
+            console.log(a,b)
+        }
+    },
+}
 </script>
 
+<style>
+
+</style>
