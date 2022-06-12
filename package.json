@@ -18,9 +18,13 @@
   "author": "GitHub",
   "license": "CC0-1.0",
   "devDependencies": {
+<<<<<<< HEAD
     "electron": "^19.0.1"
   },
   "dependencies": {
     "axios": "^0.27.2"
+=======
+    "electron": "^19.0.4"
+>>>>>>> 8fc466bf9c0abb5e4d4d94462d890ed9118b1554
   }
 }
