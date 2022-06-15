@@ -1,30 +1,27 @@
 {
-  "name": "electron-quick-start",
-  "version": "1.0.0",
-  "description": "A minimal Electron application",
-  "main": "main.js", 
-  "scripts": {
-    "start": "concurrently \"(cd src/view) &&  (npm run dev)\" \"electron  --inspect=5858  . \"",
-    "server": "(cd src/view) &&  (npm run dev)"
-  },
-  "repository": "https://github.com/electron/electron-quick-start",
-  "keywords": [
-    "Electron",
-    "quick",
-    "start",
-    "tutorial",
-    "demo"
-  ],
-  "author": "GitHub",
-  "license": "CC0-1.0",
-  "devDependencies": {
-<<<<<<< HEAD
-    "electron": "^19.0.1"
-  },
-  "dependencies": {
-    "axios": "^0.27.2"
-=======
-    "electron": "^19.0.4"
->>>>>>> 8fc466bf9c0abb5e4d4d94462d890ed9118b1554
-  }
+    "name": "electron-quick-start",
+    "version": "1.0.0",
+    "description": "A minimal Electron application",
+    "main": "main.js",
+    "scripts": {
+        "start": "concurrently \"(cd src/view) &&  (npm run dev)\" \"electron  --inspect=5858  . \"",
+        "server": "(cd src/view) &&  (npm run dev)"
+    },
+    "repository": "https://github.com/electron/electron-quick-start",
+    "keywords": [
+        "Electron",
+        "quick",
+        "start",
+        "tutorial",
+        "demo"
+    ],
+    "author": "GitHub",
+    "license": "CC0-1.0",
+    "devDependencies": {
+        "concurrently": "^7.2.1",
+        "electron": "^19.0.1"
+    },
+    "dependencies": {
+        "axios": "^0.27.2"
+    }
 }
