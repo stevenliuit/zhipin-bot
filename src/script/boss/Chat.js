@@ -115,13 +115,14 @@ module.exports = class Chat {
                         await this.page.type('.chat-input', this.hello)
                         await sleep((3 + Math.floor(Math.random() * 10)) * 1000);
                         await this.page.type('.chat-input', this.botMessage)
+                        await sleep((20 + Math.floor(Math.random() * 10)) * 1000);
                     } else {
                         console.log('当前HR发过消息')
+                        await sleep(1 * 1000);
                     }
                 } catch (e) {
                     console.log('发送消息发生错误', e)
                 }
-                await sleep((20 + Math.floor(Math.random() * 10)) * 1000);
             }
         }
         //和hr聊天
