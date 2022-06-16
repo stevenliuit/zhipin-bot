@@ -1,29 +1,29 @@
 <template>
     <div>
-        这是父组件{{name}}
+        这是测试界面
     </div>
-    <TestChild v-model:myname="name"></TestChild>
+    <button @click="openPuppeteer">打开puppeteer</button>
 </template>
 
 <script>
 import { ref } from "vue";
-import TestChild from '../../components/TestChild.vue'
 export default {
     components: {
-        TestChild
     },
     data(){
         return {
-            name: 'lks',
-            show: true,
-            checks: [],
         }
     },
     methods: {
-        ccc(a,b){
-            console.log(a,b)
-        }
     },
+    setup(){
+        const openPuppeteer = ()=>{
+            electronAPI.openPuppeteer();
+        }
+        return {
+            openPuppeteer
+        }
+    }
 }
 </script>
 
