@@ -14,4 +14,8 @@
 
 ##### 	     npm run start
 
-#### 3.初始化ipc管道在 /src/script/ipcManager/ipConfig.js
+
+
+#### 3.优化了IPC管道注册
+
+##### 		初始化ipc管道在 /src/script/ipcManager/ipConfig.js
