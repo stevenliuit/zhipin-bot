@@ -38,9 +38,7 @@ module.exports = class Chat {
                 });
                 await this.createPage();
             } else {
-                await browser.close()
-                this.browser = null;
-                await createBrowser()
+                console.log('浏览器已经存在')
             }
         }
         //创建页面
@@ -53,10 +51,6 @@ module.exports = class Chat {
         });
         console.log("初始化完成");
         await this.page.goto('https://www.zhipin.com/')
-        await sleep(5 * 1000);
-        await this.page.goto('https://login.zhipin.com/?ka=header-login')
-        await sleep(20 * 1000);
-        this.startChat()
         return
     }
 
@@ -80,52 +74,53 @@ module.exports = class Chat {
     }
 
     chatWithHR = async() => {
-            let userList = await this.getUserList()
-            for (let item of userList) {
-                //检查好友列表是否变长了
-                let checkUserList = await this.getUserList()
-                if (userList.length !== checkUserList.length) {
-                    setTimeout(async() => await this.chatWithHR(), 50)
-                    return
-                }
-                let index = await this.page.evaluate(indexName => {
-                    let userList = document.querySelectorAll('.user-list li')
-                    for (let index = 0; index < userList.length; index++) {
-                        try {
-                            let userName = userList[index].querySelector('.name').textContent.trim()
-                            if (userName === indexName) {
-                                return index
-                            }
-                        } catch (e) {
-                            console.warn('获取用户名称失败')
+        let userList = await this.getUserList()
+        for (let item of userList) {
+            //检查好友列表是否变长了
+            let checkUserList = await this.getUserList()
+            if (userList.length !== checkUserList.length) {
+                setTimeout(async() => await this.chatWithHR(), 50)
+                return
+            }
+            let index = await this.page.evaluate(indexName => {
+                let userList = document.querySelectorAll('.user-list li')
+                for (let index = 0; index < userList.length; index++) {
+                    try {
+                        let userName = userList[index].querySelector('.name').textContent.trim()
+                        if (userName === indexName) {
+                            return index
                         }
+                    } catch (e) {
+                        console.warn('获取用户名称失败')
                     }
-                    return -1
-                }, item)
-                if (index == -1) continue;
-                await this.page.click(`.user-list li:nth-child(${index+1})`)
-                await sleep(3 * 1000);
-                //判断是否和HR聊过天
-                let hasMessage = await this.page.evaluate(() => {
-                        return document.querySelector('.im-list').textContent.indexOf('很高兴认识你') === -1 && document.querySelectorAll('.im-list .item-myself').length <= 1
-                    })
-                    //发送个人简介信息
-                try {
-                    if (hasMessage) {
-                        await this.page.type('.chat-input', this.hello)
-                        await sleep((3 + Math.floor(Math.random() * 10)) * 1000);
-                        await this.page.type('.chat-input', this.botMessage)
-                        await sleep((20 + Math.floor(Math.random() * 10)) * 1000);
-                    } else {
-                        console.log('当前HR发过消息')
-                        await sleep(1 * 1000);
-                    }
-                } catch (e) {
-                    console.log('发送消息发生错误', e)
                 }
+                return -1
+            }, item)
+            if (index == -1) continue;
+            await this.page.click(`.user-list li:nth-child(${index+1})`)
+            await sleep(3 * 1000);
+            //判断是否和HR聊过天
+            let hasMessage = await this.page.evaluate(() => {
+                    return document.querySelector('.im-list').textContent.indexOf('很高兴认识你') === -1 && document.querySelectorAll('.im-list .item-myself').length <= 1
+                })
+                //发送个人简介信息
+            try {
+                if (hasMessage) {
+                    await this.page.type('.chat-input', this.hello)
+                    await sleep((3 + Math.floor(Math.random() * 10)) * 1000);
+                    await this.page.type('.chat-input', this.botMessage)
+                    await sleep((20 + Math.floor(Math.random() * 10)) * 1000);
+                } else {
+                    console.log('当前HR发过消息')
+                    await sleep(1 * 1000);
+                }
+            } catch (e) {
+                console.log('发送消息发生错误', e)
             }
         }
-        //和hr聊天
+    }
+
+    //和hr聊天
     startChat = async() => {
         await this.page.goto('https://www.zhipin.com/web/geek/chat')
         await sleep(6000)
@@ -135,7 +130,31 @@ module.exports = class Chat {
         await this.chatWithHR()
     }
 
-    start = async() => {
-        await this.createBrowser();
+    //获取登录二维码
+    getLoginQrcodeImage = async() => {
+        console.log('getLoginQrcodeImage方法执行中')
+        try {
+            await this.page.goto('https://www.zhipin.com/user/login.html')
+            await this.page.waitForSelector('.pwd-login-btn')
+            await this.page.click('.pwd-login-btn')
+            await this.page.click('.link-wechat-login')
+            let qrcodeSrc = await this.page.waitForResponse(response => response.url().indexOf('assport/qrcode/getMpCode') !== -1)
+            qrcodeSrc = await qrcodeSrc.json()
+            return { result: 1, data: qrcodeSrc.zpData.mpCodeUrl }
+        } catch (e) {
+            console.log('获取登录code失败', e)
+            return { result: 0, message: '获取登录code失败' }
+        }
+    }
+
+    init = async() => {
+        console.log('puppeteer正在初始化')
+        try {
+            await this.createBrowser();
+            return { result: 1, message: '初始化成功' }
+        } catch (e) {
+            console.log('初始化失败', e)
+            return { result: 0, message: '初始化失败' }
+        }
     }
 }

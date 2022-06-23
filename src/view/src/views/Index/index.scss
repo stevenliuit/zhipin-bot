@@ -1,0 +1,46 @@
+@import '@/assets/myvar.scss';
+.body-container {
+    background: $conBgColor;
+    height: 100vh;
+    width: 100vw;
+    padding: $mainPadding;
+    box-sizing: border-box;
+    .top-container {
+        background: $mainBgColor;
+        border-radius: $mainBorderRadius;
+        height: $topHeight;
+        padding: $secPadding;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: $secPadding;
+        .top-left {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+        }
+        .top-right {
+            flex: 1;
+        }
+    }
+    .bom-container {
+        height: calc(100vh - $topHeight - $mainPadding * 3);
+        background: $mainBgColor;
+        border-radius: $mainBorderRadius;
+        margin-top: $mainPadding;
+        padding: $secPadding;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .bom-left {
+            height: 100%;
+            width: 65%;
+            margin-right: $secPadding;
+        }
+        .bom-right {
+            height: 100%;
+            width: calc(35% - $secPadding);
+        }
+    }
+}

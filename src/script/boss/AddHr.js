@@ -1,11 +1,10 @@
 /*
  * @Author: BlueStar
  * @Date: 2022-06-06 15:12:00
- * @LastEditTime: 2022-06-16 21:50:06
+ * @LastEditTime: 2022-06-24 00:05:34
  * @Description: 获取数据的方法
  */
 const axios = require("axios");
-const puppeteer = require("puppeteer")
 
 function sleep(time) {
     return new Promise(res => {
